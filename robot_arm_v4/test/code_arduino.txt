@@ -1,0 +1,35 @@
+#include <Servo.h>
+
+Servo servos[4];  // Array para 4 servos
+const int SERVO_PINS[] = {9, 10, 11, 12};  // Pines para cada servo
+
+void setup() {
+  Serial.begin(9600);
+  
+  // Inicializar servos
+  for(int i = 0; i < 4; i++) {
+    servos[i].attach(SERVO_PINS[i]);
+    servos[i].write(90);  // Posición inicial
+  }
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n');
+    
+    if (input.startsWith("M")) {
+      input = input.substring(1);
+      int comma = input.indexOf(',');
+      int joint = input.substring(0, comma).toInt();
+      int angle = input.substring(comma + 1).toInt();
+      
+      if (joint >= 1 && joint <= 4) {
+        servos[joint-1].write(angle);
+        Serial.print("OK: Joint ");
+        Serial.print(joint);
+        Serial.print(" -> ");
+        Serial.println(angle);
+      }
+    }
+  }
+}

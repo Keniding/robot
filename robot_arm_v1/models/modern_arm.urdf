@@ -1,0 +1,270 @@
+<?xml version="1.0"?>
+<robot name="modern_industrial_robot">
+    <!-- Materiales -->
+    <material name="industrial_black">
+        <color rgba="0.1 0.1 0.1 1"/>
+    </material>
+    <material name="metallic_silver">
+        <color rgba="0.8 0.8 0.85 1"/>
+    </material>
+    <material name="robot_orange">
+        <color rgba="1.0 0.5 0.0 1"/>
+    </material>
+    <material name="glossy_black">
+        <color rgba="0.2 0.2 0.2 1"/>
+    </material>
+
+    <!-- Base fija -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.15"/>
+            </geometry>
+            <material name="industrial_black"/>
+        </visual>
+        <!-- Placa de montaje superior -->
+        <visual>
+            <origin xyz="0 0 0.11" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.02" radius="0.17"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <!-- Detalles decorativos -->
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.02" radius="0.18"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.12" radius="0.15"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="8.0"/>
+            <inertia ixx="0.15" ixy="0" ixz="0" iyy="0.15" iyz="0" izz="0.15"/>
+        </inertial>
+    </link>
+
+    <!-- Base giratoria -->
+    <joint name="base_rotation" type="revolute">
+        <parent link="base_link"/>
+        <child link="shoulder_housing"/>
+        <origin xyz="0 0 0.12" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-3.14" upper="3.14" effort="300" velocity="1"/>
+    </joint>
+
+    <link name="shoulder_housing">
+        <!-- Cuerpo principal del hombro -->
+        <visual>
+            <origin xyz="0 0 0.075" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.22 0.18 0.15"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <!-- Detalles laterales -->
+        <visual>
+            <origin xyz="0 0.09 0.075" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.22 0.01 0.15"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <visual>
+            <origin xyz="0 -0.09 0.075" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.22 0.01 0.15"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.22 0.18 0.15"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="4.0"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+        </inertial>
+    </link>
+
+    <!-- Hombro -->
+    <joint name="shoulder" type="revolute">
+        <parent link="shoulder_housing"/>
+        <child link="upper_arm"/>
+        <origin xyz="0 0 0.15" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-2.0" upper="2.0" effort="300" velocity="1"/>
+    </joint>
+
+    <link name="upper_arm">
+        <!-- Brazo principal -->
+        <visual>
+            <origin xyz="0 0 0.25" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.12 0.1 0.5"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <!-- Cubiertas laterales curvas -->
+        <visual>
+            <origin xyz="0.06 0 0.25" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.5" radius="0.01"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <visual>
+            <origin xyz="-0.06 0 0.25" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.5" radius="0.01"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <!-- Detalles estéticos -->
+        <visual>
+            <origin xyz="0 0 0.02" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.04" radius="0.08"/>
+            </geometry>
+            <material name="glossy_black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.12 0.1 0.5"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="3.0"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+        </inertial>
+    </link>
+
+    <!-- Codo con diseño más elaborado -->
+    <joint name="elbow" type="revolute">
+        <parent link="upper_arm"/>
+        <child link="forearm"/>
+        <origin xyz="0 0 0.5" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-2.0" upper="2.0" effort="200" velocity="1"/>
+    </joint>
+
+    <link name="forearm">
+        <!-- Cuerpo principal del antebrazo -->
+        <visual>
+            <origin xyz="0 0 0.2" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.1 0.08 0.4"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <!-- Detalles aerodinámicos -->
+        <visual>
+            <origin xyz="0.05 0 0.2" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.01 0.08 0.4"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <visual>
+            <origin xyz="-0.05 0 0.2" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.01 0.08 0.4"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.1 0.08 0.4"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2.0"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+        </inertial>
+    </link>
+
+    <!-- Sistema de muñeca mejorado -->
+    <joint name="wrist_1" type="revolute">
+        <parent link="forearm"/>
+        <child link="wrist_1_link"/>
+        <origin xyz="0 0 0.4" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1"/>
+    </joint>
+
+    <link name="wrist_1_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.12" radius="0.05"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <!-- Anillos decorativos -->
+        <visual>
+            <origin xyz="0 0 0.04" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.055"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <visual>
+            <origin xyz="0 0 -0.04" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.055"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.12" radius="0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.5"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+        </inertial>
+    </link>
+
+    <!-- Muñeca final con herramienta -->
+    <joint name="wrist_2" type="revolute">
+        <parent link="wrist_1_link"/>
+        <child link="tool_mount"/>
+        <origin xyz="0 0 0.06" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1"/>
+    </joint>
+
+    <link name="tool_mount">
+        <!-- Base de la herramienta -->
+        <visual>
+            <geometry>
+                <cylinder length="0.05" radius="0.04"/>
+            </geometry>
+            <material name="glossy_black"/>
+        </visual>
+        <!-- Placa de montaje -->
+        <visual>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.05"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.05" radius="0.04"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+        </inertial>
+    </link>
+</robot>

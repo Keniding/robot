@@ -48,3 +48,10 @@ BCI_CONFIG = {
         'gamma': (30, 50)
     }
 }
+
+# Configuración de la mano
+HAND_CONFIG = {
+    'CLOSE_ANGLE': -1.57,  # radianes
+    'OPEN_ANGLE': 0.0,
+    'JOINT_SPEED': 0.5
+}

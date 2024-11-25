@@ -1,6 +1,7 @@
 import pybullet as p
 import numpy as np
 from config.robot_config import CONTROL_MODES, JOINT_SPEED
+from controllers.hand_controller import HandController
 import time
 
 class KeyboardController:
@@ -11,11 +12,12 @@ class KeyboardController:
         self.control_mode = "POSITION"
         self.last_movement_time = time.time()
         self.movement_interval = 0.01  # Intervalo entre movimientos en segundos
+        self.hand_controller = HandController(robot_id)
         self.initialize_keyboard_controls()
 
     def initialize_keyboard_controls(self):
         """Define los controles del teclado"""
-        self.controls = {
+        self.controls = {            
             ord('1'): lambda: self.set_active_joint(0),
             ord('2'): lambda: self.set_active_joint(1),
             ord('3'): lambda: self.set_active_joint(2),
@@ -26,8 +28,24 @@ class KeyboardController:
             ord('r'): self.reset_position,
             ord('h'): lambda: self.move_to_preset("home"),
             ord('g'): lambda: self.move_to_preset("grab"),
-            ord('p'): lambda: self.move_to_preset("park")
+            ord('p'): lambda: self.move_to_preset("park"),
         }
+        
+        """
+        # Controles básicos de la mano
+        ord('o'): self.hand_controller.open_hand,    # Abrir mano
+        ord('c'): self.hand_controller.close_hand,   # Cerrar mano
+        
+        # Controles individuales de dedos (usando el teclado numérico)
+        ord('7'): lambda: self.hand_controller.set_finger_position('thumb', 1.0),   # Cerrar pulgar
+        ord('8'): lambda: self.hand_controller.set_finger_position('thumb', 0.0),   # Abrir pulgar
+        ord('9'): lambda: self.hand_controller.set_finger_position('index', 1.0),   # Cerrar índice
+        ord('0'): lambda: self.hand_controller.set_finger_position('index', 0.0),   # Abrir índice
+        ord('-'): lambda: self.hand_controller.set_finger_position('middle', 1.0),  # Cerrar medio
+        ord('+'): lambda: self.hand_controller.set_finger_position('middle', 0.0),  # Abrir medio
+        ord('}'): lambda: self.hand_controller.set_finger_position('ring', 1.0),    # Cerrar anular
+        ord('{'): lambda: self.hand_controller.set_finger_position('ring', 0.0),    # Abrir anular
+        """
 
     def move_joint(self, direction):
         """Mueve la articulación activa en la dirección especificada"""

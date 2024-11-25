@@ -1,0 +1,244 @@
+
+<!-- 
+    <!-- Base de la mano -->
+    <joint name="hand_base_joint" type="fixed">
+        <parent link="tool_mount"/>
+        <child link="hand_base"/>
+        <origin xyz="0 0 0.04" rpy="0 0 0"/>
+    </joint>
+
+    <link name="hand_base">
+        <visual>
+            <geometry>
+                <box size="0.08 0.12 0.02"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.08 0.12 0.02"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.3"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+    <!-- Dedos -->
+    <!-- Dedo 1 (Pulgar) -->
+    <joint name="thumb_base" type="revolute">
+        <parent link="hand_base"/>
+        <child link="thumb_link_1"/>
+        <origin xyz="-0.04 0.02 0.01" rpy="0 0 0.785398"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="thumb_link_1">
+        <visual>
+            <geometry>
+                <box size="0.02 0.08 0.015"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.02 0.08 0.015"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <!-- Dedo 2 (Índice) -->
+    <joint name="finger_1_base" type="revolute">
+        <parent link="hand_base"/>
+        <child link="finger_1_link_1"/>
+        <origin xyz="0.03 0.05 0.01" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57" upper="0" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="finger_1_link_1">
+        <visual>
+            <geometry>
+                <box size="0.02 0.1 0.015"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.02 0.1 0.015"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <!-- Dedo 3 (Medio) -->
+    <joint name="finger_2_base" type="revolute">
+        <parent link="hand_base"/>
+        <child link="finger_2_link_1"/>
+        <origin xyz="0.03 0 0.01" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57" upper="0" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="finger_2_link_1">
+        <visual>
+            <geometry>
+                <box size="0.02 0.1 0.015"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.02 0.1 0.015"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <!-- Dedo 4 (Anular) -->
+    <joint name="finger_3_base" type="revolute">
+        <parent link="hand_base"/>
+        <child link="finger_3_link_1"/>
+        <origin xyz="0.03 -0.05 0.01" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57" upper="0" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="finger_3_link_1">
+        <visual>
+            <geometry>
+                <box size="0.02 0.09 0.015"/>
+            </geometry>
+            <material name="robot_orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.02 0.09 0.015"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <!-- Falanges de los dedos -->
+    <!-- Falange del pulgar -->
+    <joint name="thumb_joint_2" type="revolute">
+        <parent link="thumb_link_1"/>
+        <child link="thumb_link_2"/>
+        <origin xyz="0 0.04 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57" upper="0" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="thumb_link_2">
+        <visual>
+            <geometry>
+                <box size="0.018 0.04 0.013"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.018 0.04 0.013"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.05"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <!-- Falanges de los otros dedos -->
+    <joint name="finger_1_joint_2" type="revolute">
+        <parent link="finger_1_link_1"/>
+        <child link="finger_1_link_2"/>
+        <origin xyz="0 0.05 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="1.57" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="finger_1_link_2">
+        <visual>
+            <geometry>
+                <box size="0.018 0.04 0.013"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.018 0.04 0.013"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.05"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <joint name="finger_2_joint_2" type="revolute">
+        <parent link="finger_2_link_1"/>
+        <child link="finger_2_link_2"/>
+        <origin xyz="0 0.05 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="1.57" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="finger_2_link_2">
+        <visual>
+            <geometry>
+                <box size="0.018 0.04 0.013"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.018 0.04 0.013"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.05"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+
+    <joint name="finger_3_joint_2" type="revolute">
+        <parent link="finger_3_link_1"/>
+        <child link="finger_3_link_2"/>
+        <origin xyz="0 0.045 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="1.57" effort="10" velocity="1"/>
+    </joint>
+
+    <link name="finger_3_link_2">
+        <visual>
+            <geometry>
+                <box size="0.018 0.04 0.013"/>
+            </geometry>
+            <material name="metallic_silver"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.018 0.04 0.013"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.05"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+-->
+
+
